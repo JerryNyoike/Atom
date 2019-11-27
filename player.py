@@ -11,6 +11,9 @@ class Player(pygame.sprite.Sprite):
         self.forward_atom = pygame.image.load("./resources/images/comet.gif")
         self.rotated_atom = pygame.image.load("./resources/images/comet.gif")
 
+        self.CameraX = 1
+        # self.CameraY = 0 don't need this right now
+
         self.image = self.forward_atom
 
         self.rect = self.image.get_rect()
@@ -33,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, surface):
         y = self.rect.y + self.rect.h - self.image.get_rect().h
-        surface.blit(self.image, (self.rect.x, y))
+        surface.blit(self.image, (self.rect.x -self.CameraX, y))
 
     def reset(self):
         self.rect.x = PLAYER_START_X
@@ -52,13 +55,13 @@ class Player(pygame.sprite.Sprite):
             # no turning let's go
             if self.direction == DIR_LEFT:
                 self.rect.x -= xVel
-                if self.rect.x <= 0:
-                    self.rect.x = 0
+                # if self.rect.x <= 0:
+                #     self.rect.x = 0
 
             elif self.direction == DIR_RIGHT:
                 self.rect.x += xVel
-                if self.rect.x >= SCREEN_WIDTH - player.rect.w:
-                    self.rect.y = SCREEN_WIDTH - player.rect.w
+                # if self.rect.x >= SCREEN_WIDTH - player.rect.w:
+                #     self.rect.y = SCREEN_WIDTH - player.rect.w
 
         else:
             # we turn
@@ -76,6 +79,10 @@ class Player(pygame.sprite.Sprite):
                 self.image = self.backward_atom
                 self.rect = self.image.get_rect()
                 self.rect.x, self.rect.y = x, y
+
+        # update camera
+        if self.rect.x > SCREEN_WIDTH / 4 * 3:
+            self.CameraX += 10
 
     def doJump(self):
         if self.jumping and not self.onGround:
