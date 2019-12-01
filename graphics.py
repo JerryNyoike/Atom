@@ -42,8 +42,8 @@ class GraphicsEngine:
     def renderGame(self):
         self.screenSurface.fill((0, 0, 0))
         self.drawBackground()
-        self.allSprites.draw(self.screenSurface)
         self.updateObstacles()
+        self.allSprites.draw(self.screenSurface)
         self.drawScore()
         self.drawTime()
 
@@ -69,29 +69,11 @@ class GraphicsEngine:
         self.screenSurface.blit(textSurface, (10, 44))
 
     def getNewObstacles(self):
-        for i in range(10):
+        for i in range(5):
             self.addObstacle(Obstacle())
 
-    def updatePlayer(self):
-        atom.doJump()
-
-        atom.onGround = False
-        if not atom.onGround and not atom.jumping:
-            atom.yVel = 4
-
-        if atom.xVel > TOP_SPEED:
-            atom.xVel = TOP_SPEED
-        elif atom.xVel < -TOP_SPEED:
-            atom.xVel = -TOP_SPEED
-
-        if atom.rect.x <= 0:
-            atom.rect.x = 0
-        elif atom.rect.x >= SCREEN_WIDTH - atom.rect.w:
-            atom.rect.x = SCREEN_WIDTH - atom.rect.w
-
-        # do collision check once we have obstacles and enemies here
-        atom.rect.x += atom.xVel
-        atom.rect.y += atom.yVel
+    def updatePlayer(self, direction):
+        atom.move(direction)
 
     def updateObstacles(self):
         for obstacle in self.obstacles:
