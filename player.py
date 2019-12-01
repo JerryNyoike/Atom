@@ -1,4 +1,5 @@
 import pygame
+import physics as ph
 
 from physics import PLAYER_START_X, SCREEN_HEIGHT, SCREEN_WIDTH, DIR_LEFT, DIR_RIGHT
 
@@ -22,6 +23,9 @@ class Player(pygame.sprite.Sprite):
 
         self.xVel = 0
         self.yVel = 0
+
+        # initial direction
+        self.direction = DIR_RIGHT
 
         # jumping
 
@@ -51,15 +55,16 @@ class Player(pygame.sprite.Sprite):
     def move(self, dir):
         """ move will also implement turning
         """
+
         if self.direction == dir:
             # no turning let's go
             if self.direction == DIR_LEFT:
-                self.rect.x -= xVel
+                self.rect.x -= self.xVel
                 # if self.rect.x <= 0:
                 #     self.rect.x = 0
 
             elif self.direction == DIR_RIGHT:
-                self.rect.x += xVel
+                self.rect.x += self.xVel
                 # if self.rect.x >= SCREEN_WIDTH - player.rect.w:
                 #     self.rect.y = SCREEN_WIDTH - player.rect.w
 
@@ -76,7 +81,7 @@ class Player(pygame.sprite.Sprite):
 
             elif self.direction == DIR_LEFT:
                 # turn backward
-                self.image = self.backward_atom
+                self.image = self.rotated_atom
                 self.rect = self.image.get_rect()
                 self.rect.x, self.rect.y = x, y
 
