@@ -3,7 +3,7 @@ import time
 
 from obstacle import Obstacle
 from graphics import GraphicsEngine
-from physics import SCREEN_HEIGHT, SCREEN_WIDTH
+from physics import SCREEN_HEIGHT, SCREEN_WIDTH, DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT
 
 from pygame.locals import (
     K_UP,
@@ -20,7 +20,7 @@ from pygame.locals import (
 )
 
 E_ADDOBSTACLE = pygame.USEREVENT + 1
-pygame.time.set_timer(E_ADDOBSTACLE, 250)
+pygame.time.set_timer(E_ADDOBSTACLE, 400)
 
 class GameEngine():
 
@@ -55,8 +55,6 @@ class GameEngine():
 
     def gameLoop(self):
         while self.gameRunning:
-            self.graphicsEngine.renderGame()
-
             for event in pygame.event.get():
 
                 if event.type == QUIT:
@@ -72,8 +70,18 @@ class GameEngine():
             pressed_keys = pygame.key.get_pressed()
             for key in pressed_keys:
                 if pressed_keys[K_UP] or pressed_keys[K_w]:
-                    self.graphicsEngine.updatePlayer()
+                    self.graphicsEngine.updatePlayer(DIR_UP)
+                
+                elif pressed_keys[K_DOWN] or pressed_keys[K_s]:
+                    self.graphicsEngine.updatePlayer(DIR_DOWN)
 
+                elif pressed_keys[K_LEFT] or pressed_keys[K_a]:
+                    self.graphicsEngine.updatePlayer(DIR_LEFT)
+
+                elif pressed_keys[K_RIGHT] or pressed_keys[K_d]:
+                    self.graphicsEngine.updatePlayer(DIR_RIGHT)
+
+            self.graphicsEngine.renderGame()
             pygame.display.update()
             self.clock.tick(60)
 
