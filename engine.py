@@ -68,18 +68,18 @@ class GameEngine():
                         self.gameRunning = False
             
             pressed_keys = pygame.key.get_pressed()
-            for key in pressed_keys:
-                if pressed_keys[K_UP] or pressed_keys[K_w]:
-                    self.graphicsEngine.updatePlayer(DIR_UP)
-                
-                elif pressed_keys[K_DOWN] or pressed_keys[K_s]:
-                    self.graphicsEngine.updatePlayer(DIR_DOWN)
+            
+            if pressed_keys[K_UP] or pressed_keys[K_w]:
+                self.graphicsEngine.updatePlayer(DIR_UP)
+            
+            elif pressed_keys[K_DOWN] or pressed_keys[K_s]:
+                self.graphicsEngine.updatePlayer(DIR_DOWN)
 
-                elif pressed_keys[K_LEFT] or pressed_keys[K_a]:
-                    self.graphicsEngine.updatePlayer(DIR_LEFT)
+            elif pressed_keys[K_LEFT] or pressed_keys[K_a]:
+                self.graphicsEngine.updatePlayer(DIR_LEFT)
 
-                elif pressed_keys[K_RIGHT] or pressed_keys[K_d]:
-                    self.graphicsEngine.updatePlayer(DIR_RIGHT)
+            elif pressed_keys[K_RIGHT] or pressed_keys[K_d]:
+                self.graphicsEngine.updatePlayer(DIR_RIGHT)
 
             self.graphicsEngine.renderGame()
             pygame.display.update()
